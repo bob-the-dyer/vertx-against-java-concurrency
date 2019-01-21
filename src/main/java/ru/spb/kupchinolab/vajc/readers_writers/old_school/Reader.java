@@ -1,4 +1,4 @@
-package ru.spb.kupchinolab.vertx_against_java_concurrency.old_school.readers_writers;
+package ru.spb.kupchinolab.vajc.readers_writers.old_school;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -6,9 +6,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Reader extends Player {
 
-    public static AtomicInteger servedReaders = new AtomicInteger(0);
+    static AtomicInteger servedReaders = new AtomicInteger(0);
 
-    public Reader(String name, Random random, int maxDelay, ReentrantReadWriteLock rwLock) {
+    Reader(String name, Random random, int maxDelay, ReentrantReadWriteLock rwLock) {
         super(name, random, maxDelay, rwLock);
     }
 
