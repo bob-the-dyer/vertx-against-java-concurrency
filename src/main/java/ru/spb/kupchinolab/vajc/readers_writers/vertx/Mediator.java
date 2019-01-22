@@ -27,7 +27,38 @@ public class Mediator extends AbstractVerticle {
             assert readerAccessedCount >= 0;
             assert writerAccessedCount == 0 || writerAccessedCount == 1;
 
-            if (type == AccessType.WRITER && action == ActionType.RELEASE_RESOURCE) {
+            if (type == AccessType.READER && action == ActionType.REQUEST_ACCESS) {
+                if (writerAccessedCount > 0) {
+                    awaitingAccessList.add(event);
+                } else {
+                    readerAccessedCount++;
+                    event.reply("OK");
+                }
+            } else if (type == AccessType.WRITER && action == ActionType.REQUEST_ACCESS) {
+                if (readerAccessedCount == 0 && writerAccessedCount == 0) {
+                    writerAccessedCount++;
+                    event.reply("OK");
+                } else {
+                    awaitingAccessList.add(event);
+                }
+            } else if (type == AccessType.READER && action == ActionType.RELEASE_RESOURCE) {
+                assert readerAccessedCount > 0;
+                assert writerAccessedCount == 0;
+
+                logAndStat(name, type, message.getInteger("nextDelay"));
+                readerAccessedCount--;
+
+                if (readerAccessedCount == 0 && awaitingAccessList.size() > 0) {
+                    Message<JsonObject> m = awaitingAccessList.get(0);
+                    JsonObject json = m.body();
+
+                    assert AccessType.WRITER == AccessType.valueOf(json.getString("type"));
+
+                    awaitingAccessList.remove(0);
+                    writerAccessedCount++;
+                    m.reply("OK");
+                }
+            } else if (type == AccessType.WRITER && action == ActionType.RELEASE_RESOURCE) {
                 assert readerAccessedCount == 0;
                 assert writerAccessedCount == 1;
 
@@ -53,37 +84,6 @@ public class Mediator extends AbstractVerticle {
                     } else {
                         break;
                     }
-                }
-            } else if (type == AccessType.READER && action == ActionType.RELEASE_RESOURCE) {
-                assert readerAccessedCount > 0;
-                assert writerAccessedCount == 0;
-
-                logAndStat(name, type, message.getInteger("nextDelay"));
-                readerAccessedCount--;
-
-                if (readerAccessedCount == 0 && awaitingAccessList.size() > 0) {
-                    Message<JsonObject> m = awaitingAccessList.get(0);
-                    JsonObject json = m.body();
-
-                    assert AccessType.WRITER == AccessType.valueOf(json.getString("type"));
-
-                    awaitingAccessList.remove(0);
-                    writerAccessedCount++;
-                    m.reply("OK");
-                }
-            } else if (type == AccessType.READER && action == ActionType.REQUEST_ACCESS) {
-                if (writerAccessedCount > 0) {
-                    awaitingAccessList.add(event);
-                } else {
-                    readerAccessedCount++;
-                    event.reply("OK");
-                }
-            } else if (type == AccessType.WRITER && action == ActionType.REQUEST_ACCESS) {
-                if (readerAccessedCount == 0 && writerAccessedCount == 0) {
-                    writerAccessedCount++;
-                    event.reply("OK");
-                } else {
-                    awaitingAccessList.add(event);
                 }
             }
         });
