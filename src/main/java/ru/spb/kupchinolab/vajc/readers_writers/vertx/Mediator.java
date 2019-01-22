@@ -14,7 +14,7 @@ public class Mediator extends AbstractVerticle {
     //TODO optimize for several Mediator verticals
     private int writerAccessedCount = 0;
     private int readerAccessedCount = 0;
-    private final List<Message<JsonObject>> awaitingAccessList = new LinkedList<>();
+    private List<Message<JsonObject>> awaitingAccessList = new LinkedList<>();
 
     @Override
     public void start() {
@@ -24,25 +24,33 @@ public class Mediator extends AbstractVerticle {
             AccessType type = AccessType.valueOf(message.getString("type"));
             ActionType action = ActionType.valueOf(message.getString("action"));
 
+            assert readerAccessedCount >= 0;
+            assert writerAccessedCount == 0 || writerAccessedCount == 1;
+
             if (type == AccessType.WRITER && action == ActionType.RELEASE_RESOURCE) {
                 assert readerAccessedCount == 0;
-                assert writerAccessedCount > 0;
+                assert writerAccessedCount == 1;
 
                 logAndStat(name, type, message.getInteger("nextDelay"));
+                writerAccessedCount--;
 
                 for (; ; ) {
                     if (awaitingAccessList.size() > 0) {
                         Message<JsonObject> m = awaitingAccessList.get(0);
                         JsonObject json = m.body();
-                        awaitingAccessList.remove(0);
-                        m.reply("OK");
                         if (AccessType.WRITER == AccessType.valueOf(json.getString("type"))) {
+                            if (readerAccessedCount == 0) {
+                                awaitingAccessList.remove(0);
+                                writerAccessedCount++;
+                                m.reply("OK");
+                            }
                             break;
                         } else {
+                            awaitingAccessList.remove(0);
                             readerAccessedCount++;
+                            m.reply("OK");
                         }
                     } else {
-                        writerAccessedCount--;
                         break;
                     }
                 }
@@ -51,7 +59,6 @@ public class Mediator extends AbstractVerticle {
                 assert writerAccessedCount == 0;
 
                 logAndStat(name, type, message.getInteger("nextDelay"));
-
                 readerAccessedCount--;
 
                 if (readerAccessedCount == 0 && awaitingAccessList.size() > 0) {
@@ -60,8 +67,8 @@ public class Mediator extends AbstractVerticle {
 
                     assert AccessType.WRITER == AccessType.valueOf(json.getString("type"));
 
-                    writerAccessedCount++;
                     awaitingAccessList.remove(0);
+                    writerAccessedCount++;
                     m.reply("OK");
                 }
             } else if (type == AccessType.READER && action == ActionType.REQUEST_ACCESS) {

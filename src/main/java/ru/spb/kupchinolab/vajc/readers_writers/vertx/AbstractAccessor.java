@@ -12,7 +12,7 @@ import static ru.spb.kupchinolab.vajc.readers_writers.vertx.ActionType.REQUEST_A
 
 public abstract class AbstractAccessor extends AbstractVerticle {
 
-    protected final String name;
+    private final String name;
     private final int maxDelay;
 
     AbstractAccessor(String name, int maxDelay) {
@@ -43,8 +43,8 @@ public abstract class AbstractAccessor extends AbstractVerticle {
                         .put("type", accessType)
                         .put("action", RELEASE_RESOURCE)
                         .put("nextDelay", nextDelay);
-                vertx.eventBus().send("access_queue", releaseResource);
                 vertx.setTimer(nextDelay, new AccessHandler());
+                vertx.eventBus().send("access_queue", releaseResource);
             } else {
                 event.cause().printStackTrace();
             }
