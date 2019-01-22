@@ -11,7 +11,6 @@ import java.util.List;
 
 public class Mediator extends AbstractVerticle {
 
-    //TODO optimize for several Mediator verticals
     private int writerAccessedCount = 0;
     private int readerAccessedCount = 0;
     private List<Message<JsonObject>> awaitingAccessList = new LinkedList<>();
