@@ -1,20 +1,16 @@
 package ru.spb.kupchinolab.vajc.readers_writers.vertx;
 
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
+import static ru.spb.kupchinolab.vajc.readers_writers.vertx.AccessType.WRITER;
 
-class Writer extends Player {
+class Writer extends AbstractAccessor {
 
-    static AtomicInteger servedWriters = new AtomicInteger(0);
-
-    Writer(String name, Random random, int writerMaxDelay) {
-        super(name, random, writerMaxDelay);
+    Writer(String name, int writerMaxDelay) {
+        super(name, writerMaxDelay);
     }
 
     @Override
-    public void play() {
-        super.play();
-        servedWriters.incrementAndGet();
+    protected void access() {
+        access(WRITER);
     }
 
 }
