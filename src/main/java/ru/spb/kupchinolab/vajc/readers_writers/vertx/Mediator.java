@@ -6,7 +6,8 @@ import io.vertx.core.eventbus.Message;
 import io.vertx.core.json.JsonObject;
 import ru.spb.kupchinolab.vajc.readers_writers.Utils;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Mediator extends AbstractVerticle {
 
