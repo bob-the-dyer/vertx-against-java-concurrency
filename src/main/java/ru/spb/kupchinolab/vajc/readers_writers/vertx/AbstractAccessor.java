@@ -42,12 +42,12 @@ public abstract class AbstractAccessor extends AbstractVerticle {
                     //DO NOTHING - emulating active work because Thread.sleep is forbidden inside EventLoop
                 }
                 int nextDelay = ThreadLocalRandom.current().nextInt(1, maxDelay);
+                vertx.setTimer(nextDelay, new AccessHandler());
                 JsonObject releaseResource = new JsonObject()
                         .put("name", name)
                         .put("type", accessType)
                         .put("action", RELEASE_RESOURCE)
                         .put("nextDelay", nextDelay);
-                vertx.setTimer(nextDelay, new AccessHandler());
                 vertx.eventBus().send("access_queue", releaseResource);
             } else {
                 log.error("access request failed for {} with result {} and error {}", name, event.result());
