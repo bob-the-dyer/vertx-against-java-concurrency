@@ -3,6 +3,8 @@ package ru.spb.kupchinolab.vajc.readers_writers.vertx;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -11,6 +13,8 @@ import static ru.spb.kupchinolab.vajc.readers_writers.vertx.ActionType.RELEASE_R
 import static ru.spb.kupchinolab.vajc.readers_writers.vertx.ActionType.REQUEST_ACCESS;
 
 public abstract class AbstractAccessor extends AbstractVerticle {
+
+    Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     private final String name;
     private final int maxDelay;
@@ -22,7 +26,7 @@ public abstract class AbstractAccessor extends AbstractVerticle {
 
     @Override
     public void start() {
-        System.out.println(name + " started");
+        log.info("{} started", name);
         vertx.setTimer(ThreadLocalRandom.current().nextInt(1, maxDelay), new AccessHandler());
     }
 
@@ -46,7 +50,7 @@ public abstract class AbstractAccessor extends AbstractVerticle {
                 vertx.setTimer(nextDelay, new AccessHandler());
                 vertx.eventBus().send("access_queue", releaseResource);
             } else {
-                event.cause().printStackTrace();
+                log.error("access request failed for {} with result {} and error {}", name, event.result());
             }
         });
     }

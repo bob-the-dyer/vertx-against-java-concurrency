@@ -1,5 +1,8 @@
 package ru.spb.kupchinolab.vajc.readers_writers.old_school;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ThreadLocalRandom;
@@ -9,6 +12,8 @@ import static ru.spb.kupchinolab.vajc.readers_writers.Utils.TIME_TO_SLEEP_IN_MIL
 import static ru.spb.kupchinolab.vajc.readers_writers.Utils.log;
 
 public abstract class AbstractAccessor extends Thread {
+
+    Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     private final String name;
     private final int maxDelay;
@@ -23,7 +28,7 @@ public abstract class AbstractAccessor extends Thread {
 
     @Override
     public void run() {
-        System.out.println(name + " started");
+        log.info("{} started", name);
         new Timer().schedule(new AccessTask(), ThreadLocalRandom.current().nextInt(1, maxDelay));
     }
 
@@ -31,7 +36,7 @@ public abstract class AbstractAccessor extends Thread {
         try {
             Thread.sleep(TIME_TO_SLEEP_IN_MILLIS);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.warn(e.getMessage(), e);
         }
         int nextDelay = ThreadLocalRandom.current().nextInt(1, maxDelay);
         log(name, rwLock.getReadLockCount(), rwLock.isWriteLocked() ? 1 : 0, rwLock.getQueueLength(), nextDelay);

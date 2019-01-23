@@ -1,5 +1,8 @@
 package ru.spb.kupchinolab.vajc.readers_writers.old_school;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.IntStream;
 
@@ -7,8 +10,10 @@ import static ru.spb.kupchinolab.vajc.readers_writers.Utils.*;
 
 public class Main {
 
+    static Logger log = LoggerFactory.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
-        System.out.println(System.currentTimeMillis() + ": starting Main");
+        log.info("starting Main");
 
         ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
 
