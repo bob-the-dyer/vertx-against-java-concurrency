@@ -11,12 +11,12 @@ public class Utils {
 
     private static Logger log = LoggerFactory.getLogger(Utils.class.getName());
 
-    final static public int READER_MAX_DELAY = 1000;
-    final static public int WRITER_MAX_DELAY = 2500;
+    final static public int READER_MAX_DELAY = 500;
+    final static public int WRITER_MAX_DELAY = 1000;
     final static public int NUMBER_OF_READERS = 10;
     final static public int NUMBER_OF_WRITERS = 2;
-    final static public int TIME_TO_RUN_IN_MILLIS = 60000;
-    final static public int TIME_TO_SLEEP_IN_MILLIS = 100;
+    final static public int TIME_TO_RUN_IN_MILLIS = 10000;
+    final static public int TIME_TO_SLEEP_IN_MILLIS = 50;
 
     public static void exitAfterDelay(Supplier<Integer> readerAccessCount, Supplier<Integer> writerAccessCount) {
         new Timer().schedule(new TimerTask() {
