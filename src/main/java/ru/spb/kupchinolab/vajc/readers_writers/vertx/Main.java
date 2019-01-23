@@ -1,6 +1,5 @@
 package ru.spb.kupchinolab.vajc.readers_writers.vertx;
 
-import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +19,9 @@ public class Main {
 
         Vertx vertx = Vertx.vertx();
 
-        vertx.deployVerticle(Statistics.class, new DeploymentOptions());
-        vertx.deployVerticle(Mediator.class, new DeploymentOptions());
+        Statistics stats;
+        vertx.deployVerticle(stats = new Statistics());
+        vertx.deployVerticle(new Mediator());
 
         //start readers
         IntStream.range(0, NUMBER_OF_READERS).forEach(i ->
@@ -32,7 +32,7 @@ public class Main {
                 vertx.deployVerticle(new Writer("writer_" + i, WRITER_MAX_DELAY))
         );
 
-        exitAfterDelay(() -> Statistics.readersAccessCounter, () -> Statistics.writerAccessCounter);
+        exitAfterDelay(() -> stats.readersAccessCounter, () -> stats.writerAccessCounter);
 
     }
 

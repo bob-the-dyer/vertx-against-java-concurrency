@@ -40,6 +40,11 @@ Actors Model, CSP, STM, fibers, coroutines, continuations
 ## Ссылки
 https://vertx.io
 TODO add links to Actors Model, CSP, STM, fibers, coroutines, continuations
+
+https://en.wikipedia.org/wiki/Readers–writers_problem
+https://en.wikipedia.org/wiki/Dining_philosophers_problem
+
+## TODO remove the following links later
 https://www.kgeorgiy.info/courses/java-advanced/lectures/threads-2.html
 https://alexeykalina.github.io/technologies/concurrency.html
 https://engineering.universe.com/introduction-to-concurrency-models-with-ruby-part-i-550d0dbb970

@@ -3,8 +3,9 @@ package ru.spb.kupchinolab.vajc.readers_writers.vertx;
 import io.vertx.core.AbstractVerticle;
 
 public class Statistics extends AbstractVerticle {
-    static int readersAccessCounter;
-    static int writerAccessCounter;
+
+    int readersAccessCounter;
+    int writerAccessCounter;
 
     @Override
     public void start() {
