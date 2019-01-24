@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ThreadLocalRandom;
 
-import static ru.spb.kupchinolab.vajc.dining_philosophers.Utils.MAX_TIME_TO_EAT_IN_MILLIS;
+import static ru.spb.kupchinolab.vajc.dining_philosophers.Utils.getRandomDrinkDelayInMillis;
+import static ru.spb.kupchinolab.vajc.dining_philosophers.Utils.getRandomEatDelayInMillis;
 
 class Philosopher extends Thread {
 
@@ -35,7 +35,13 @@ class Philosopher extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        log.info("philosopher {} is starting", order);
         while (true) {
+            try {
+                Thread.sleep(getRandomDrinkDelayInMillis());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             dinner();
         }
     }
@@ -58,7 +64,7 @@ class Philosopher extends Thread {
             log.info("[second_lock] philosopher {} try to take {} chopstick", order, secondChopstick.order);
             secondChopstick.lock();
             try {
-                int eatTime = ThreadLocalRandom.current().nextInt(1, MAX_TIME_TO_EAT_IN_MILLIS);
+                int eatTime = getRandomEatDelayInMillis();
 
                 log.info("[eattime] philosopher {} is going to eat for {} millis", order, eatTime);
                 try {
@@ -68,12 +74,12 @@ class Philosopher extends Thread {
                 }
                 updateStats(eatTime);
             } finally {
+                log.info("[second_unlock] philosopher {} is about to unlock {} chopstick", order, secondChopstick.order);
                 secondChopstick.unlock();
-                log.info("[second_unlock] philosopher {} unlocked {} chopstick", order, secondChopstick.order);
             }
         } finally {
+            log.info("[first_unlock] philosopher {} is about to unlock {} chopstick", order, firstChopstick.order);
             firstChopstick.unlock();
-            log.info("[first_unlock] philosopher {} unlocked {} chopstick", order, firstChopstick.order);
         }
     }
 
