@@ -58,6 +58,7 @@ class Philosopher extends Thread {
             firstChopstick = leftChopstick;
             secondChopstick = rightChopstick;
         }
+
         log.info("[first_lock] philosopher {} try to take {} chopstick", order, firstChopstick.order);
         firstChopstick.lock();
         try {
@@ -72,7 +73,9 @@ class Philosopher extends Thread {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
                 updateStats(eatTime);
+
             } finally {
                 log.info("[second_unlock] philosopher {} is about to unlock {} chopstick", order, secondChopstick.order);
                 secondChopstick.unlock();

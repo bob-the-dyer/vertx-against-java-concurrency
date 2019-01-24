@@ -75,7 +75,7 @@ public class Philosopher extends AbstractVerticle {
                         vertx.setTimer(getRandomDrinkDelayInMillis(), new AttemptToEat());
                     });
                 } else {
-                    log.warn("first chopstick {} can't be held by philosopher {} because of {} ", firstChopstick, order, event1.cause().getMessage());
+                    log.warn("first chopstick {} can't be held by philosopher {} because of '{}' ", firstChopstick, order, event1.cause().getMessage());
                     vertx.setTimer(getRandomDrinkDelayInMillis(), new AttemptToEat());
                 }
             });
