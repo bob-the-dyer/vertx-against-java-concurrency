@@ -13,10 +13,10 @@ public class Utils {
     private static Logger log = LoggerFactory.getLogger(Utils.class.getName());
 
     private final static int TIME_TO_RUN_IN_MILLIS = 10000;
-    public final static int PHILOSOPHERS_COUNT = 10;
+    public final static int PHILOSOPHERS_COUNT = 5;
     public final static int MAX_TIME_TO_EAT_IN_MILLIS = 50;
 
-    public static void exitAfterDelay(Supplier<Map<String, Integer>> stats) {
+    public static void exitAfterDelay(Supplier<Map<Integer, Map<String, Integer>>> stats) {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
