@@ -27,15 +27,16 @@ Actors Model, CSP, STM, fibers, coroutines, continuations
  
 ## В проекте разбираются пять классических задач на многопоточность
 * Задача о читателях и писателях (с приоритетеом писателя) - V
-* Обедающие философы - ...
-* Производители и потребители
+* Обедающие философы - V
+* Производители и потребители - ...
 * Спящий парикмахер 
-* Задания и работники 
+* Задания и работники
 
 Формат разбора задач: 
  1. постановка задачи
  1. классическое решение с блокировками
  1. решение на vert.x без блокировок
+ 1. (под вопросом) сравнение производиельности, результаты JMH  
 
 ## Ссылки
 https://vertx.io
@@ -43,6 +44,7 @@ TODO add links to Actors Model, CSP, STM, fibers, coroutines, continuations
 
 https://en.wikipedia.org/wiki/Readers–writers_problem
 https://en.wikipedia.org/wiki/Dining_philosophers_problem
+https://en.wikipedia.org/wiki/Producer–consumer_problem
 
 ## TODO remove the following links later
 https://www.kgeorgiy.info/courses/java-advanced/lectures/threads-2.html
