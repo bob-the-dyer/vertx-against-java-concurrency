@@ -16,8 +16,8 @@ class Philosopher extends Thread {
     private Logger log = LoggerFactory.getLogger(this.getName());
 
     final int order;
-    final Chopstick leftChopstick;
-    final Chopstick rightChopstick;
+    final Chopstick firstChopstick;
+    final Chopstick secondChopstick;
     final Map<Integer, Map<String, Integer>> stats;
     CountDownLatch latch;
 
@@ -25,8 +25,15 @@ class Philosopher extends Thread {
         this.latch = latch;
         this.stats = stats;
         this.order = order;
-        this.leftChopstick = leftChopstick;
-        this.rightChopstick = rightChopstick;
+        if (rightChopstick.order < leftChopstick.order) {
+            assert order != 0;
+            firstChopstick = rightChopstick;
+            secondChopstick = leftChopstick;
+        } else { // leftChopstick.order < rightChopstick.order
+            assert order == 0;
+            firstChopstick = leftChopstick;
+            secondChopstick = rightChopstick;
+        }
     }
 
     @Override
@@ -53,18 +60,6 @@ class Philosopher extends Thread {
     }
 
     private void eat() {
-        Chopstick firstChopstick;
-        Chopstick secondChopstick;
-        if (rightChopstick.order < leftChopstick.order) {
-            assert order != 0;
-            firstChopstick = rightChopstick;
-            secondChopstick = leftChopstick;
-        } else { // leftChopstick.order < rightChopstick.order
-            assert order == 0;
-            firstChopstick = leftChopstick;
-            secondChopstick = rightChopstick;
-        }
-
         log.info("[first_lock] philosopher {} try to take {} chopstick", order, firstChopstick.order);
         firstChopstick.lock();
         try {

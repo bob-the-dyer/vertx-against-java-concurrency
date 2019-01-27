@@ -15,12 +15,11 @@ public class Main {
     public static void main(String[] args) {
         log.info("starting Main");
 
-        System.setProperty("vertx.logger-delegate-factory-class-name", "io.vertx.core.logging.SLF4JLogDelegateFactory");
-
         Vertx vertx = Vertx.vertx();
 
         Statistics stats;
         vertx.deployVerticle(stats = new Statistics());
+
         DeploymentOptions deploymentOptions = new DeploymentOptions().setInstances(PHILOSOPHERS_COUNT);
         vertx.deployVerticle(Philosopher.class, deploymentOptions, event -> {
             vertx.eventBus().publish("start_topic", "Go!");

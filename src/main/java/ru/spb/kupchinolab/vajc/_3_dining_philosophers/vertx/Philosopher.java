@@ -51,35 +51,35 @@ public class Philosopher extends AbstractVerticle {
     private void eat() {
         SharedData sharedData = vertx.sharedData();
         log.info("[first_lock] philosopher {} try to take {} chopstick", order, firstChopstick);
-        sharedData.getLock("chopstick_" + firstChopstick, event1 -> {
-            if (event1.succeeded()) {
-                Lock chopstick1 = event1.result();
-
+        sharedData.getLock("chopstick_" + firstChopstick, firstLock -> {
+            if (firstLock.succeeded()) {
+                Lock chopstick_1 = firstLock.result();
                 log.info("[second_lock] philosopher {} try to take {} chopstick", order, secondChopstick);
-                sharedData.getLock("chopstick_" + secondChopstick, event2 -> {
-                    if (event2.succeeded()) {
-                        Lock chopstick2 = event2.result();
+
+                sharedData.getLock("chopstick_" + secondChopstick, secondLock -> {
+                    if (secondLock.succeeded()) {
+                        Lock chopstick_2 = secondLock.result();
 
                         int eatTime = getRandomEatDelayInMillis();
                         log.info("[eattime] philosopher {} is going to eat for {} millis", order, eatTime);
 
                         long startTime = System.currentTimeMillis();
-                        while (System.currentTimeMillis() < startTime + eatTime) ;
+                        while (System.currentTimeMillis() < startTime + eatTime) ; // emulating active eat time
 
                         updateStats(eatTime);
 
                         log.info("[second_unlock] philosopher {} is about to unlock {} chopstick", order, secondChopstick);
-                        chopstick2.release();
+                        chopstick_2.release();
                     } else {
-                        log.warn("second chopstick {} can't be held by philosopher {} because of {} ", secondChopstick, order, event2.cause().getMessage());
+                        log.warn("second chopstick {} can't be held by philosopher {} because of {} ", secondChopstick, order, secondLock.cause().getMessage());
                     }
 
                     log.info("[first_unlock] philosopher {} is about to unlock {} chopstick", order, firstChopstick);
-                    chopstick1.release();
+                    chopstick_1.release();
                     vertx.setTimer(getRandomDrinkDelayInMillis(), new AttemptToEat());
                 });
             } else {
-                log.warn("first chopstick {} can't be held by philosopher {} because of '{}' ", firstChopstick, order, event1.cause().getMessage());
+                log.warn("first chopstick {} can't be held by philosopher {} because of '{}' ", firstChopstick, order, firstLock.cause().getMessage());
                 vertx.setTimer(getRandomDrinkDelayInMillis(), new AttemptToEat());
             }
         });
@@ -94,7 +94,6 @@ public class Philosopher extends AbstractVerticle {
     }
 
     class AttemptToEat implements Handler<Long> {
-
         @Override
         public void handle(Long timerId) {
             eat();
