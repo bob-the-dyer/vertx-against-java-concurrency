@@ -26,9 +26,9 @@ Actors Model, CSP, STM, fibers, coroutines, continuations
  - подход к конкарренси в vertx
  
 ## В проекте разбираются пять классических задач на многопоточность
+* Производители и потребители - V
 * Задача о читателях и писателях (с приоритетеом писателя) - V
 * Обедающие философы - V
-* Производители и потребители - V
 * Спящий парикмахер - no
 * Задания и работники - no
 
@@ -41,10 +41,9 @@ Actors Model, CSP, STM, fibers, coroutines, continuations
 ## Ссылки
 https://vertx.io
 TODO add links to Actors Model, CSP, STM, fibers, coroutines, continuations
-
+https://en.wikipedia.org/wiki/Producer–consumer_problem
 https://en.wikipedia.org/wiki/Readers–writers_problem
 https://en.wikipedia.org/wiki/Dining_philosophers_problem
-https://en.wikipedia.org/wiki/Producer–consumer_problem
 
 ## TODO remove the following links later
 https://www.kgeorgiy.info/courses/java-advanced/lectures/threads-2.html
