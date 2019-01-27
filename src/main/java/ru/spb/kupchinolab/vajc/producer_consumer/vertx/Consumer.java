@@ -14,13 +14,13 @@ public class Consumer extends AbstractVerticle {
 
     @Override
     public void start() {
-        vertx.eventBus().consumer("real_messages", message -> {
+        vertx.eventBus().consumer("consumption", message -> {
             consumedCount++;
             int delay = getRandomConsumeTimeInMillis();
             log.info("consumer has received message '{}' and is going to play for {} millis", message.body(), delay);
-            vertx.setTimer(delay, timer -> {
-                message.reply("gimme more");
-            });
+            long startTime = System.currentTimeMillis();
+            while (System.currentTimeMillis() < startTime + delay) ;
+            message.reply("===" + message.body() + "===");
         });
     }
 }

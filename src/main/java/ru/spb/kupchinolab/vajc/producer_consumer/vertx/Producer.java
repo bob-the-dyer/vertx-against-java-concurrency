@@ -31,12 +31,14 @@ public class Producer extends AbstractVerticle {
 
         @Override
         public void handle(Long timerId) {
-            vertx.eventBus().send("messages", "I like HighLoad!", event -> {
+            producedCount++;
+            String message = "I like HighLoad! " + producedCount;
+            log.info("producer is sending message '{}'", message);
+            vertx.eventBus().send("production", message, event -> {
                 int delay = getRandomProduceTimeInMillis();
-                log.info("producer is going to send message in {} millis", delay);
+                log.info("producer is going to send next message in {} millis", delay);
                 vertx.setTimer(delay, new TimerHandler(vertx));
             });
-            producedCount++;
         }
     }
 }

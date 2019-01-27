@@ -14,8 +14,8 @@ public class Utils {
 
     public final static int BUFFER_CAPACITY = 5;
     private final static int TIME_TO_RUN_IN_MILLIS = 10000;
-    private final static int MAX_TIME_TO_CONSUME_IN_MILLIS = 50;
-    private final static int MAX_TIME_TO_PRODUCE_IN_MILLIS = 50;
+    private final static int MAX_TIME_TO_CONSUME_IN_MILLIS = 40;
+    private final static int MAX_TIME_TO_PRODUCE_IN_MILLIS = 20;
 
     public static int getRandomConsumeTimeInMillis() {
         return ThreadLocalRandom.current().nextInt(1, MAX_TIME_TO_CONSUME_IN_MILLIS);
@@ -34,5 +34,4 @@ public class Utils {
             }
         }, TIME_TO_RUN_IN_MILLIS);
     }
-
 }

@@ -11,24 +11,25 @@ import static ru.spb.kupchinolab.vajc.producer_consumer.Utils.*;
 public class Main {
 
     static Logger log = LoggerFactory.getLogger(Main.class.getName());
-    static AtomicInteger consumedCount = new AtomicInteger(0);
-    static AtomicInteger producedCount = new AtomicInteger(0);
 
     public static void main(String[] args) {
         log.info("starting Main");
 
-        LinkedBlockingDeque<Object> queue = new LinkedBlockingDeque<>(BUFFER_CAPACITY);
+        LinkedBlockingDeque<Integer> queue = new LinkedBlockingDeque<>(BUFFER_CAPACITY);
+
+        AtomicInteger consumedCount = new AtomicInteger(0);
+        AtomicInteger producedCount = new AtomicInteger(0);
 
         new Thread(() -> {
             while (true) {
                 try {
                     log.info("consumer is about to consume from queue with size {}", queue.size());
 
-                    queue.take();
+                    Integer message = queue.take();
                     consumedCount.incrementAndGet();
 
                     int randomConsumeTimeInMillis = getRandomConsumeTimeInMillis();
-                    log.info("consumer is going to play for {} millis", randomConsumeTimeInMillis);
+                    log.info("consumer is going to play with '{}' for {} millis", message, randomConsumeTimeInMillis);
                     Thread.sleep(randomConsumeTimeInMillis);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -43,10 +44,9 @@ public class Main {
                     log.info("producer is going to work for {} millis", randomProduceTimeInMillis);
                     Thread.sleep(randomProduceTimeInMillis);
 
-                    log.info("producer is about to put to queue with size {}", queue.size());
-
-                    queue.put(new Object());
-                    producedCount.incrementAndGet();
+                    int counter = producedCount.incrementAndGet();
+                    log.info("producer is about to put '{}' to queue with size {}", counter, queue.size());
+                    queue.put(counter);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
