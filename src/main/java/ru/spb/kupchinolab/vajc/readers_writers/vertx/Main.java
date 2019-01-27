@@ -25,11 +25,11 @@ public class Main {
 
         //start readers
         IntStream.range(0, NUMBER_OF_READERS).forEach(i ->
-                vertx.deployVerticle(new Reader("reader_" + i, READER_MAX_DELAY))
+                vertx.deployVerticle(new Reader("reader_" + i))
         );
         //start writers
         IntStream.range(0, NUMBER_OF_WRITERS).forEach(i ->
-                vertx.deployVerticle(new Writer("writer_" + i, WRITER_MAX_DELAY))
+                vertx.deployVerticle(new Writer("writer_" + i))
         );
 
         exitAfterDelay(() -> stats.readersAccessCounter, () -> stats.writerAccessCounter);

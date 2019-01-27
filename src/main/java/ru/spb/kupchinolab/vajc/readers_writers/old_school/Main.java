@@ -19,11 +19,11 @@ public class Main {
 
         //start readers
         IntStream.range(0, NUMBER_OF_READERS).forEach(i ->
-                new Reader("reader_" + i, READER_MAX_DELAY, rwLock).start()
+                new Reader("reader_" + i, rwLock).start()
         );
         //start writers
         IntStream.range(0, NUMBER_OF_WRITERS).forEach(i ->
-                new Writer("writer_" + i, WRITER_MAX_DELAY, rwLock).start()
+                new Writer("writer_" + i, rwLock).start()
         );
 
         exitAfterDelay(() -> Reader.servedReaders.get(), () -> Writer.servedWriters.get());

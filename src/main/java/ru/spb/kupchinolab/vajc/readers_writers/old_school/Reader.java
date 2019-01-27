@@ -3,12 +3,14 @@ package ru.spb.kupchinolab.vajc.readers_writers.old_school;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import static ru.spb.kupchinolab.vajc.readers_writers.Utils.getRandomReadDelayInMillis;
+
 public class Reader extends AbstractAccessor {
 
     static AtomicInteger servedReaders = new AtomicInteger(0);
 
-    Reader(String name, int maxDelay, ReentrantReadWriteLock rwLock) {
-        super(name, maxDelay, rwLock);
+    Reader(String name, ReentrantReadWriteLock rwLock) {
+        super(name, rwLock);
     }
 
     @Override
@@ -21,5 +23,10 @@ public class Reader extends AbstractAccessor {
         } finally {
             lock.unlock();
         }
+    }
+
+    @Override
+    protected long getDelay() {
+        return getRandomReadDelayInMillis();
     }
 }

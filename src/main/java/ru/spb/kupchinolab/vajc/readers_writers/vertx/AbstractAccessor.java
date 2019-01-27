@@ -6,9 +6,6 @@ import io.vertx.core.json.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.ThreadLocalRandom;
-
-import static ru.spb.kupchinolab.vajc.readers_writers.Utils.TIME_TO_SLEEP_IN_MILLIS;
 import static ru.spb.kupchinolab.vajc.readers_writers.vertx.ActionType.RELEASE_RESOURCE;
 import static ru.spb.kupchinolab.vajc.readers_writers.vertx.ActionType.REQUEST_ACCESS;
 
@@ -17,17 +14,15 @@ public abstract class AbstractAccessor extends AbstractVerticle {
     Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     private final String name;
-    private final int maxDelay;
 
-    AbstractAccessor(String name, int maxDelay) {
+    AbstractAccessor(String name) {
         this.name = name;
-        this.maxDelay = maxDelay;
     }
 
     @Override
     public void start() {
         log.info("{} started", name);
-        vertx.setTimer(ThreadLocalRandom.current().nextInt(1, maxDelay), new AccessHandler());
+        vertx.setTimer(getDelay(), new AccessHandler());
     }
 
     void access(AccessType accessType) {
@@ -38,10 +33,10 @@ public abstract class AbstractAccessor extends AbstractVerticle {
         vertx.eventBus().send("access_queue", requestAccess, event -> {
             if (event.succeeded()) {
                 long activeStart = System.currentTimeMillis();
-                while (System.currentTimeMillis() <= activeStart + TIME_TO_SLEEP_IN_MILLIS) {
+                while (System.currentTimeMillis() <= activeStart + getDelay()) {
                     //DO NOTHING - emulating active work because Thread.sleep is forbidden inside EventLoop
                 }
-                int nextDelay = ThreadLocalRandom.current().nextInt(1, maxDelay);
+                long nextDelay = getDelay();
                 vertx.setTimer(nextDelay, new AccessHandler());
                 JsonObject releaseResource = new JsonObject()
                         .put("name", name)
@@ -62,7 +57,10 @@ public abstract class AbstractAccessor extends AbstractVerticle {
             access();
         }
 
+
     }
 
     abstract protected void access();
+
+    abstract protected long getDelay();
 }

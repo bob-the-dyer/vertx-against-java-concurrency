@@ -44,7 +44,7 @@ public class Mediator extends AbstractVerticle {
                 assert readerAccessedCount > 0;
                 assert writerAccessedCount == 0;
 
-                logAndStat(name, type, message.getInteger("nextDelay"));
+                logAndStat(name, type, message.getLong("nextDelay"));
                 readerAccessedCount--;
 
                 if (readerAccessedCount == 0 && awaitingAccessList.size() > 0) {
@@ -61,7 +61,7 @@ public class Mediator extends AbstractVerticle {
                 assert readerAccessedCount == 0;
                 assert writerAccessedCount == 1;
 
-                logAndStat(name, type, message.getInteger("nextDelay"));
+                logAndStat(name, type, message.getLong("nextDelay"));
                 writerAccessedCount--;
 
                 for (; ; ) {
@@ -88,7 +88,7 @@ public class Mediator extends AbstractVerticle {
         });
     }
 
-    private void logAndStat(String name, AccessType type, Integer nextDelay) {
+    private void logAndStat(String name, AccessType type, long nextDelay) {
         Utils.log(name, readerAccessedCount, writerAccessedCount, awaitingAccessList.size(), nextDelay);
         vertx.eventBus().send("usage_statistics", type.name());
     }
