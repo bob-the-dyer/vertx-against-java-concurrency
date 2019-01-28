@@ -1,12 +1,12 @@
-package ru.spb.kupchinolab.vajc._3_dining_philosophers.vertx;
+package ru.spb.kupchinolab.vajc._3_.dining_philosophers.vertx;
 
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static ru.spb.kupchinolab.vajc._3_dining_philosophers.Utils.PHILOSOPHERS_COUNT;
-import static ru.spb.kupchinolab.vajc._3_dining_philosophers.Utils.exitAfterDelay;
+import static ru.spb.kupchinolab.vajc._3_.dining_philosophers.Utils.PHILOSOPHERS_COUNT;
+import static ru.spb.kupchinolab.vajc._3_.dining_philosophers.Utils.exitAfterDelay;
 
 public class Main {
 

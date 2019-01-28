@@ -1,4 +1,4 @@
-package ru.spb.kupchinolab.vajc._3_dining_philosophers.old_school;
+package ru.spb.kupchinolab.vajc._3_.dining_philosophers.old_school;
 
 import java.util.concurrent.locks.ReentrantLock;
 

@@ -1,11 +1,12 @@
-package ru.spb.kupchinolab.vajc._2_readers_writers.old_school;
+package ru.spb.kupchinolab.vajc._2_.readers_writers.old_school;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import static ru.spb.kupchinolab.vajc._2_readers_writers.Utils.log;
+import static ru.spb.kupchinolab.vajc._2_.readers_writers.Utils.log;
 
 public abstract class AbstractAccessor extends Thread {
 
@@ -13,15 +14,22 @@ public abstract class AbstractAccessor extends Thread {
 
     private final String name;
     final ReentrantReadWriteLock rwLock;
+    private final CountDownLatch latch;
 
-    AbstractAccessor(String name, ReentrantReadWriteLock rwLock) {
+    AbstractAccessor(String name, ReentrantReadWriteLock rwLock, CountDownLatch latch) {
         super(name);
         this.name = name;
         this.rwLock = rwLock;
+        this.latch = latch;
     }
 
     @Override
     public void run() {
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         log.info("{} started", name);
         for (; ; ) {
             try {

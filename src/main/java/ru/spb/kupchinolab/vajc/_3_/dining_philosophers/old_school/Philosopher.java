@@ -1,4 +1,4 @@
-package ru.spb.kupchinolab.vajc._3_dining_philosophers.old_school;
+package ru.spb.kupchinolab.vajc._3_.dining_philosophers.old_school;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static ru.spb.kupchinolab.vajc._3_dining_philosophers.Utils.getRandomDrinkDelayInMillis;
-import static ru.spb.kupchinolab.vajc._3_dining_philosophers.Utils.getRandomEatDelayInMillis;
+import static ru.spb.kupchinolab.vajc._3_.dining_philosophers.Utils.getRandomDrinkDelayInMillis;
+import static ru.spb.kupchinolab.vajc._3_.dining_philosophers.Utils.getRandomEatDelayInMillis;
 
 class Philosopher extends Thread {
 

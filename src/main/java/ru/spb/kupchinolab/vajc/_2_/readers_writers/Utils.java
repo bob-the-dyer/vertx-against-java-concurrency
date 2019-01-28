@@ -1,4 +1,4 @@
-package ru.spb.kupchinolab.vajc._2_readers_writers;
+package ru.spb.kupchinolab.vajc._2_.readers_writers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,11 +12,11 @@ public class Utils {
 
     private static Logger log = LoggerFactory.getLogger(Utils.class.getName());
 
-    final static public int NUMBER_OF_READERS = 9;
-    final static public int NUMBER_OF_WRITERS = 3;
+    final static public int NUMBER_OF_READERS = 8;
+    final static public int NUMBER_OF_WRITERS = 2;
     private final static int TIME_TO_RUN_IN_MILLIS = 10000;
-    private final static int MAX_TIME_TO_READ_IN_MILLIS = 20;
-    private final static int MAX_TIME_TO_WRITE_IN_MILLIS = 200;
+    private final static int MAX_TIME_TO_READ_IN_MILLIS = 50;
+    private final static int MAX_TIME_TO_WRITE_IN_MILLIS = 50;
 
     public static void exitAfterDelay(Supplier<Integer> readerAccessCount, Supplier<Integer> writerAccessCount) {
         new Timer().schedule(new TimerTask() {

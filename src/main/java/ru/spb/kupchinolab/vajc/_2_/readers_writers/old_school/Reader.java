@@ -1,16 +1,17 @@
-package ru.spb.kupchinolab.vajc._2_readers_writers.old_school;
+package ru.spb.kupchinolab.vajc._2_.readers_writers.old_school;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import static ru.spb.kupchinolab.vajc._2_readers_writers.Utils.getRandomReadDelayInMillis;
+import static ru.spb.kupchinolab.vajc._2_.readers_writers.Utils.getRandomReadDelayInMillis;
 
 public class Reader extends AbstractAccessor {
 
     static AtomicInteger servedReaders = new AtomicInteger(0);
 
-    Reader(String name, ReentrantReadWriteLock rwLock) {
-        super(name, rwLock);
+    Reader(String name, ReentrantReadWriteLock rwLock, CountDownLatch latch) {
+        super(name, rwLock, latch);
     }
 
     @Override

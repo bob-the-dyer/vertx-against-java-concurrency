@@ -1,4 +1,4 @@
-package ru.spb.kupchinolab.vajc._3_dining_philosophers.vertx;
+package ru.spb.kupchinolab.vajc._3_.dining_philosophers.vertx;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;

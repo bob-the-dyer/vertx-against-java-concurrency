@@ -1,4 +1,4 @@
-package ru.spb.kupchinolab.vajc._2_readers_writers.vertx;
+package ru.spb.kupchinolab.vajc._2_.readers_writers.vertx;
 
 import io.vertx.core.AbstractVerticle;
 

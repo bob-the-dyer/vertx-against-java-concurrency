@@ -1,4 +1,4 @@
-package ru.spb.kupchinolab.vajc._3_dining_philosophers.vertx;
+package ru.spb.kupchinolab.vajc._3_.dining_philosophers.vertx;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import static ru.spb.kupchinolab.vajc._3_dining_philosophers.Utils.*;
+import static ru.spb.kupchinolab.vajc._3_.dining_philosophers.Utils.*;
 
 public class Philosopher extends AbstractVerticle {
 

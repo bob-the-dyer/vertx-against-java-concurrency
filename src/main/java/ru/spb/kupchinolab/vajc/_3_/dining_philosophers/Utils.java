@@ -1,4 +1,4 @@
-package ru.spb.kupchinolab.vajc._3_dining_philosophers;
+package ru.spb.kupchinolab.vajc._3_.dining_philosophers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
