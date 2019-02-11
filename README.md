@@ -14,11 +14,14 @@
  
 ## Что не так со стандартным java concurrеncy?
 * сложно, мудрено
+* не композабл
+* могут стать hot spot
+* дедлоки, лайвлоки, голодание, инверсия приоритетов, нарушение инкапсуляции, конвоирование
 * дорого переключать потоки
 * для веба подход "отдельный поток на каждый запрос" не подходит для высоконагруженных приложений
 
 ## Какие есть альтернативные подходы?
-Actors Model, CSP, STM, fibers, coroutines, continuations
+Actors Model, CSP, STM, fibers, coroutines, continuations, функциональное программирование, Erlang
 
 ## Минимум знаний по https://vertx.io необходимый для понимания: 
  - основные принципы: events, eventloop, async, nonblocking
@@ -50,3 +53,5 @@ https://www.kgeorgiy.info/courses/java-advanced/lectures/threads-2.html
 https://alexeykalina.github.io/technologies/concurrency.html
 https://engineering.universe.com/introduction-to-concurrency-models-with-ruby-part-i-550d0dbb970
 https://engineering.universe.com/introduction-to-concurrency-models-with-ruby-part-ii-c39c7e612bed
+http://highload.guide/blog/DBMS-for-data-in-RAM.html - начиная со слайда "Подходы к конкарренсу", и далее 
+Конвоирование
