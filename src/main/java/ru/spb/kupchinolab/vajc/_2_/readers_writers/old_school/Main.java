@@ -11,7 +11,7 @@ import static ru.spb.kupchinolab.vajc._2_.readers_writers.Utils.*;
 
 public class Main {
 
-    static Logger log = LoggerFactory.getLogger(Main.class.getName());
+    private static Logger log = LoggerFactory.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
         log.info("starting Main");

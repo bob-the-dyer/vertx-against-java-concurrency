@@ -8,7 +8,7 @@ import static ru.spb.kupchinolab.vajc._1_.producer_consumer.Utils.getRandomConsu
 
 public class Consumer extends AbstractVerticle {
 
-    Logger log = LoggerFactory.getLogger(this.getClass().getName());
+    private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     int consumedCount = 0;
 

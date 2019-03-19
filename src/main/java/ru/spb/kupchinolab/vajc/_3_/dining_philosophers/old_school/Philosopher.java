@@ -15,11 +15,11 @@ class Philosopher extends Thread {
 
     private Logger log = LoggerFactory.getLogger(this.getName());
 
-    final int order;
-    final Chopstick firstChopstick;
-    final Chopstick secondChopstick;
-    final Map<Integer, Map<String, Integer>> stats;
-    CountDownLatch latch;
+    private final int order;
+    private final Chopstick firstChopstick;
+    private final Chopstick secondChopstick;
+    private final Map<Integer, Map<String, Integer>> stats;
+    private CountDownLatch latch;
 
     Philosopher(int order, Chopstick leftChopstick, Chopstick rightChopstick, Map<Integer, Map<String, Integer>> stats, CountDownLatch latch) {
         this.latch = latch;

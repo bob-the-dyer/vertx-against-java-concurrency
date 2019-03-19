@@ -10,7 +10,7 @@ import static ru.spb.kupchinolab.vajc._3_.dining_philosophers.Utils.exitAfterDel
 
 public class Main {
 
-    static Logger log = LoggerFactory.getLogger(Main.class.getName());
+    private static Logger log = LoggerFactory.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
         log.info("starting Main");
@@ -22,7 +22,7 @@ public class Main {
 
         DeploymentOptions deploymentOptions = new DeploymentOptions().setInstances(PHILOSOPHERS_COUNT);
         vertx.deployVerticle(Philosopher.class, deploymentOptions, event -> {
-            vertx.eventBus().publish("start_topic", "Go!");
+            vertx.eventBus().publish("start_topic", "Go-go-go!");
             exitAfterDelay(() -> stats.stats);
         });
     }

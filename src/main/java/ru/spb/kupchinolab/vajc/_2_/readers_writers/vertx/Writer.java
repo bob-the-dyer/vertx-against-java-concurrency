@@ -5,7 +5,7 @@ import static ru.spb.kupchinolab.vajc._2_.readers_writers.vertx.AccessType.WRITE
 
 public class Writer extends AbstractAccessor {
 
-    static int globalOrder = 0;
+    private static int globalOrder = 0;
 
     public Writer() {
         super("writer_" + globalOrder++);

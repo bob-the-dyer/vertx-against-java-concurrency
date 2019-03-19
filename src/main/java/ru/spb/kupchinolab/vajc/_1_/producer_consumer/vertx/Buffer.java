@@ -15,7 +15,7 @@ import static ru.spb.kupchinolab.vajc._1_.producer_consumer.Utils.BUFFER_CAPACIT
 
 public class Buffer extends AbstractVerticle {
 
-    Logger log = LoggerFactory.getLogger(this.getClass().getName());
+    private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     private Queue<Message<?>> buffer = new LinkedList<>();
     private Consumer onConsumerReplyAction;
@@ -27,13 +27,13 @@ public class Buffer extends AbstractVerticle {
             buffer.offer(event);
             log.info("buffer size is '{}'", buffer.size());
             if (buffer.size() < BUFFER_CAPACITY) {
-                event.reply("gimme more");
+                event.reply("produce more");
                 onConsumerReplyAction = o -> {
                 };
             } else {
                 log.info("buffer size '{}' is overlimited", buffer.size());
                 onConsumerReplyAction = o -> {
-                    event.reply("gimme more");
+                    event.reply("produce more");
                 };
             }
             if (buffer.size() == 1) {

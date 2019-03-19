@@ -5,7 +5,7 @@ import static ru.spb.kupchinolab.vajc._2_.readers_writers.vertx.AccessType.READE
 
 public class Reader extends AbstractAccessor {
 
-    static int globalOrder = 0;
+    private static int globalOrder = 0;
 
     public Reader() {
         super("reader_" + globalOrder++);

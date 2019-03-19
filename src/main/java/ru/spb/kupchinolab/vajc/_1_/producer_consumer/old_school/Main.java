@@ -11,7 +11,7 @@ import static ru.spb.kupchinolab.vajc._1_.producer_consumer.Utils.*;
 
 public class Main {
 
-    static Logger log = LoggerFactory.getLogger(Main.class.getName());
+    private static Logger log = LoggerFactory.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
         log.info("starting Main");
@@ -54,6 +54,6 @@ public class Main {
             }
         }).start();
 
-        exitAfterDelay(() -> consumedCount.get(), () -> producedCount.get());
+        exitAfterDelay(consumedCount::get, producedCount::get);
     }
 }

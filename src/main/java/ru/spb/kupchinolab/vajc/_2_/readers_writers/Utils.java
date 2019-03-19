@@ -16,7 +16,7 @@ public class Utils {
     final static public int NUMBER_OF_WRITERS = 2;
     private final static int TIME_TO_RUN_IN_MILLIS = 10000;
     private final static int MAX_TIME_TO_READ_IN_MILLIS = 50;
-    private final static int MAX_TIME_TO_WRITE_IN_MILLIS = 50;
+    private final static int MAX_TIME_TO_WRITE_IN_MILLIS = 200;
 
     public static void exitAfterDelay(Supplier<Integer> readerAccessCount, Supplier<Integer> writerAccessCount) {
         new Timer().schedule(new TimerTask() {

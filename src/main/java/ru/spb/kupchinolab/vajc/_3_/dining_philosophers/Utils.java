@@ -15,8 +15,8 @@ public class Utils {
 
     private final static int TIME_TO_RUN_IN_MILLIS = 10000;
     public final static int PHILOSOPHERS_COUNT = 5;
-    public final static int MAX_TIME_TO_EAT_IN_MILLIS = 50;
-    public final static int MAX_TIME_TO_DRINK_IN_MILLIS = 50;
+    private final static int MAX_TIME_TO_EAT_IN_MILLIS = 50;
+    private final static int MAX_TIME_TO_DRINK_IN_MILLIS = 50;
 
     public static void exitAfterDelay(Supplier<Map<Integer, Map<String, Integer>>> stats) {
         new Timer().schedule(new TimerTask() {

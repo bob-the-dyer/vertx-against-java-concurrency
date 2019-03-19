@@ -9,7 +9,7 @@ import static ru.spb.kupchinolab.vajc._2_.readers_writers.Utils.*;
 
 public class Main {
 
-    static Logger log = LoggerFactory.getLogger(Main.class.getName());
+    private static Logger log = LoggerFactory.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
         log.info("starting Main");
@@ -22,7 +22,7 @@ public class Main {
         vertx.deployVerticle(Reader.class, new DeploymentOptions().setInstances(NUMBER_OF_READERS), compRead -> {
             vertx.deployVerticle(Writer.class, new DeploymentOptions().setInstances(NUMBER_OF_WRITERS), compWrite -> {
                 log.info("all verticals are ready");
-                vertx.eventBus().publish("start_topic", "Go!");
+                vertx.eventBus().publish("start_topic", "Go-go-go!");
                 exitAfterDelay(() -> stats.readersAccessCounter, () -> stats.writerAccessCounter);
             });
         });

@@ -15,7 +15,7 @@ import static ru.spb.kupchinolab.vajc._3_.dining_philosophers.Utils.exitAfterDel
 
 public class Main {
 
-    static Logger log = LoggerFactory.getLogger(Main.class.getName());
+    private static Logger log = LoggerFactory.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
 

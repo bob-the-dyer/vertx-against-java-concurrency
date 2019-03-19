@@ -16,7 +16,7 @@ public class Philosopher extends AbstractVerticle {
 
     private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    static int globalOrder = 0;
+    private static int globalOrder = 0;
 
     private final int order;
     private final int firstChopstick;
