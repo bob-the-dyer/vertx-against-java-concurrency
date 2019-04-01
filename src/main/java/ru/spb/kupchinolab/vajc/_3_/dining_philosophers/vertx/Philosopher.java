@@ -8,8 +8,6 @@ import io.vertx.core.shareddata.SharedData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import static ru.spb.kupchinolab.vajc._3_.dining_philosophers.Utils.*;
 
 public class Philosopher extends AbstractVerticle {
@@ -39,7 +37,7 @@ public class Philosopher extends AbstractVerticle {
     public void start() {
         vertx.eventBus().consumer("start_topic", event -> {
             log.info("philosopher {} is starting", order);
-            boolean skipDrink = ThreadLocalRandom.current().nextBoolean();
+            boolean skipDrink = isSkipDrink();
             if (skipDrink) {
                 eat();
             } else {

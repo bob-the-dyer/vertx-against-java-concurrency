@@ -40,4 +40,8 @@ public class Utils {
         return ThreadLocalRandom.current().nextInt(1, MAX_TIME_TO_EAT_IN_MILLIS);
     }
 
+    public static boolean isSkipDrink() {
+        return ThreadLocalRandom.current().nextBoolean();
+    }
+
 }
